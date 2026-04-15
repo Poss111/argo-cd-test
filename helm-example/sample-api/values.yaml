@@ -1,0 +1,62 @@
+# Chart defaults. Argo CD examples pass values/common.yaml followed by an
+# environment file, but this file keeps the chart renderable on its own.
+environment: local
+replicaCount: 1
+
+image:
+  registry: ghcr.io
+  repository: stefanprodan/podinfo
+  tag: 6.7.1
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 80
+  targetPort: 9898
+
+runtimeConfig:
+  uiMessage: sample-api running locally
+  logLevel: info
+  featurePreview: false
+
+resources:
+  requests:
+    cpu: 50m
+    memory: 64Mi
+  limits:
+    cpu: 250m
+    memory: 128Mi
+
+ingress:
+  enabled: false
+  className: ""
+  host: ""
+  annotations: {}
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 3
+  targetCPUUtilizationPercentage: 70
+
+podDisruptionBudget:
+  enabled: false
+  minAvailable: 1
+
+networkPolicy:
+  enabled: false
+  ingressNamespace: ingress-nginx
+  ports:
+    - protocol: TCP
+      port: 9898
+
+probes:
+  readiness:
+    path: /readyz
+    initialDelaySeconds: 5
+    periodSeconds: 10
+  liveness:
+    path: /healthz
+    initialDelaySeconds: 10
+    periodSeconds: 20
+

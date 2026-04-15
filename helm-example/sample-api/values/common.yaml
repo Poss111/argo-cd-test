@@ -1,0 +1,29 @@
+# Shared values used by every environment.
+image:
+  registry: ghcr.io
+  repository: stefanprodan/podinfo
+  tag: 6.7.1
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 80
+  targetPort: 9898
+
+probes:
+  readiness:
+    path: /readyz
+    initialDelaySeconds: 5
+    periodSeconds: 10
+  liveness:
+    path: /healthz
+    initialDelaySeconds: 10
+    periodSeconds: 20
+
+podLabels:
+  app.kubernetes.io/part-of: argo-cd-test
+
+secrets:
+  create: false
+  externalSecretName: ""
+

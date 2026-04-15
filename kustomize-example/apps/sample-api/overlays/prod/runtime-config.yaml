@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: sample-api-runtime
+data:
+  ui-message: "sample-api running in prod"
+  log-level: warn
+  feature-preview: "false"
+

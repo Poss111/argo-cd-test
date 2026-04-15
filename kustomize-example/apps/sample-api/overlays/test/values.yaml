@@ -1,0 +1,37 @@
+# Test-specific chart values.
+#
+# Test should resemble production where practical, while still allowing
+# integration validation settings that are not production policy.
+environment: test
+
+replicaCount: 2
+
+resources:
+  requests:
+    cpu: 50m
+    memory: 128Mi
+  limits:
+    cpu: 300m
+    memory: 256Mi
+
+runtimeConfig:
+  uiMessage: sample-api running in test
+  logLevel: info
+  featurePreview: false
+
+ingress:
+  enabled: true
+  className: nginx
+  host: sample-api-test.example.com
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+
+autoscaling:
+  enabled: false
+
+podDisruptionBudget:
+  enabled: false
+
+networkPolicy:
+  enabled: false
+

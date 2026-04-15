@@ -1,0 +1,31 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: sample-api-helm-prod
+  namespace: argocd
+  labels:
+    app.kubernetes.io/name: sample-api
+    deployment-tool: helm
+    environment: prod
+spec:
+  project: sample-platform
+  source:
+    repoURL: https://github.com/your-org/argo-cd-test.git
+    targetRevision: HEAD
+    path: helm-example/sample-api
+    helm:
+      releaseName: sample-api-prod
+      valueFiles:
+        - values/common.yaml
+        - values/prod.yaml
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: sample-api-prod
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - ApplyOutOfSyncOnly=true
+

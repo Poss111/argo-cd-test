@@ -1,0 +1,33 @@
+# Test resembles production where practical and enables integration ingress.
+environment: test
+replicaCount: 2
+
+resources:
+  requests:
+    cpu: 50m
+    memory: 128Mi
+  limits:
+    cpu: 300m
+    memory: 256Mi
+
+runtimeConfig:
+  uiMessage: sample-api running in test
+  logLevel: info
+  featurePreview: false
+
+ingress:
+  enabled: true
+  className: nginx
+  host: sample-api-test.example.com
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+
+autoscaling:
+  enabled: false
+
+podDisruptionBudget:
+  enabled: false
+
+networkPolicy:
+  enabled: false
+

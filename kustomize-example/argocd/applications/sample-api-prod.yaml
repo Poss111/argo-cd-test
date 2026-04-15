@@ -1,0 +1,25 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: sample-api-prod
+  namespace: argocd
+  labels:
+    app.kubernetes.io/name: sample-api
+    environment: prod
+spec:
+  project: sample-platform
+  source:
+    repoURL: https://github.com/your-org/argo-cd-test.git
+    targetRevision: HEAD
+    path: apps/sample-api/overlays/prod
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: sample-api-prod
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - ApplyOutOfSyncOnly=true
+

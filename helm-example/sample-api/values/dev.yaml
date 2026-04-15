@@ -1,0 +1,29 @@
+# Dev optimizes for fast feedback and low cost.
+environment: dev
+replicaCount: 1
+
+resources:
+  requests:
+    cpu: 25m
+    memory: 64Mi
+  limits:
+    cpu: 150m
+    memory: 128Mi
+
+runtimeConfig:
+  uiMessage: sample-api running in dev
+  logLevel: debug
+  featurePreview: true
+
+ingress:
+  enabled: false
+
+autoscaling:
+  enabled: false
+
+podDisruptionBudget:
+  enabled: false
+
+networkPolicy:
+  enabled: false
+

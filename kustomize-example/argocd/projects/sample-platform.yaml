@@ -1,0 +1,35 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: sample-platform
+  namespace: argocd
+spec:
+  description: Sample platform applications managed by Argo CD
+  sourceRepos:
+    - https://github.com/your-org/argo-cd-test.git
+  destinations:
+    - namespace: sample-api-dev
+      server: https://kubernetes.default.svc
+    - namespace: sample-api-test
+      server: https://kubernetes.default.svc
+    - namespace: sample-api-prod
+      server: https://kubernetes.default.svc
+  clusterResourceWhitelist:
+    - group: ""
+      kind: Namespace
+  namespaceResourceWhitelist:
+    - group: ""
+      kind: ConfigMap
+    - group: ""
+      kind: Service
+    - group: apps
+      kind: Deployment
+    - group: autoscaling
+      kind: HorizontalPodAutoscaler
+    - group: networking.k8s.io
+      kind: Ingress
+    - group: networking.k8s.io
+      kind: NetworkPolicy
+    - group: policy
+      kind: PodDisruptionBudget
+

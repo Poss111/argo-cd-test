@@ -1,0 +1,36 @@
+# Shared chart values used by every environment.
+#
+# Environment values files should override only what differs for that
+# environment. Keep stable workload identity and common defaults here.
+global:
+  appName: sample-api
+  imageRegistry: ghcr.io
+  imageRepository: stefanprodan/podinfo
+
+image:
+  tag: 6.7.1
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 80
+  targetPort: 9898
+
+podLabels:
+  app.kubernetes.io/name: sample-api
+  app.kubernetes.io/part-of: argo-cd-test
+
+probes:
+  readiness:
+    path: /readyz
+    initialDelaySeconds: 5
+    periodSeconds: 10
+  liveness:
+    path: /healthz
+    initialDelaySeconds: 10
+    periodSeconds: 20
+
+secrets:
+  create: false
+  externalSecretName: ""
+

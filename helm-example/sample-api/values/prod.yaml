@@ -1,0 +1,41 @@
+# Prod enables operational safeguards.
+environment: prod
+replicaCount: 3
+
+resources:
+  requests:
+    cpu: 100m
+    memory: 256Mi
+  limits:
+    cpu: 500m
+    memory: 512Mi
+
+runtimeConfig:
+  uiMessage: sample-api running in prod
+  logLevel: warn
+  featurePreview: false
+
+ingress:
+  enabled: true
+  className: nginx
+  host: sample-api.example.com
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+
+autoscaling:
+  enabled: true
+  minReplicas: 3
+  maxReplicas: 10
+  targetCPUUtilizationPercentage: 70
+
+podDisruptionBudget:
+  enabled: true
+  minAvailable: 2
+
+networkPolicy:
+  enabled: true
+  ingressNamespace: ingress-nginx
+  ports:
+    - protocol: TCP
+      port: 9898
+
