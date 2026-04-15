@@ -1,6 +1,6 @@
 # Dev optimizes for fast feedback and low cost.
 environment: dev
-replicaCount: 1
+replicaCount: 2
 
 resources:
   requests:
@@ -26,4 +26,3 @@ podDisruptionBudget:
 
 networkPolicy:
   enabled: false
-
